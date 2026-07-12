@@ -1,0 +1,13 @@
+{
+  "name": "cedar-marketplace",
+  "owner": {
+    "name": "Cedar"
+  },
+  "plugins": [
+    {
+      "name": "cedar",
+      "source": "./cedar-plugin",
+      "description": "Cedar — AI email & CRM copilot. Tools + skills, plus conversation capture on hook-capable surfaces (Cowork, Claude Code)."
+    }
+  ]
+}

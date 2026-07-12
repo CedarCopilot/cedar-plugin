@@ -1,0 +1,9 @@
+{
+  "name": "cedar",
+  "description": "Cedar — AI email & CRM copilot. Connects Cedar's tools and skills, and records your conversation to Cedar on hook-capable surfaces (Cowork, Claude Code).",
+  "version": "0.1.0",
+  "author": {
+    "name": "Cedar"
+  },
+  "homepage": "https://cedarcopilot.com"
+}

@@ -1,0 +1,37 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JSON validity
+        run: |
+          set -e
+          for f in $(find . -name '*.json' -not -path './node_modules/*'); do
+            echo "checking $f"
+            python3 -m json.tool "$f" > /dev/null
+          done
+
+      - name: Dev-artifact guard (no ngrok/localhost URLs)
+        run: |
+          set -e
+          if grep -rniE 'ngrok\.(app|io)|localhost|127\.0\.0\.1' cedar-plugin/.mcp.json; then
+            echo "::error file=cedar-plugin/.mcp.json::Found a dev/local URL in .mcp.json — this must point at the real production MCP endpoint before merging."
+            exit 1
+          fi
+          if ! grep -q 'api\.mail\.cedarcopilot\.com' cedar-plugin/.mcp.json; then
+            echo "::error file=cedar-plugin/.mcp.json::.mcp.json's URL doesn't match the expected prod hostname (api.mail.cedarcopilot.com). If this is a deliberate change (e.g. a new prod domain), update this check in the same PR."
+            exit 1
+          fi
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "cedar-mcp": {
+      "type": "http",
+      "url": "https://api.mail.cedarcopilot.com/mcp"
+    }
+  }
+}

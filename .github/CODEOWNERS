@@ -1,0 +1,6 @@
+# Require review from Cedar's own team on every change — this repo is public and a
+# merge to main is immediately live for every connected customer.
+#
+# No GitHub team exists in the CedarCopilot org yet; update this to a real team
+# (e.g. @CedarCopilot/engineering) once one is created. Placeholder owner below.
+* @isabelle-cedar
