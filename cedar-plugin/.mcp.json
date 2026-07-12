@@ -2,7 +2,7 @@
   "mcpServers": {
     "cedar-mcp": {
       "type": "http",
-      "url": "https://api.mail.cedarcopilot.com/mcp"
+      "url": "https://f2c703af1725.ngrok.app/mcp"
     }
   }
 }
