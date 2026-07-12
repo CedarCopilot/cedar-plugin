@@ -31,7 +31,8 @@ jobs:
             exit 1
           fi
 
-      - name: Secret scan
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # No explicit secret-scanning step here: gitleaks-action now requires a paid
+      # license for org-owned repos (hit this directly — see commit history). GitHub's
+      # native secret scanning + push protection (enabled on this repo via the API,
+      # not in-repo config) is the primary gate per the design doc; that was always
+      # meant to be the primary control, this step was optional defense-in-depth.
