@@ -6,13 +6,42 @@ Claude shows up in your Cedar chat history.
 
 ## Install
 
-**Claude Cowork**: open the Marketplace section, search for "cedar", click Install.
+**Claude Cowork**: open the Marketplace section, search for "cedar", click Install. The
+exact flow for adding a marketplace that isn't yet in Anthropic's own directory (as
+opposed to installing from one already listed) hasn't been verified end-to-end here yet
+— confirm the discovery/add step works before assuming parity with the Claude Code path
+below.
 
 **Claude Code**:
 ```
 /plugin marketplace add CedarCopilot/cedar-plugin
 /plugin install cedar@cedar-marketplace
 ```
+
+## Testing (Claude Code — most controllable path, verified working)
+
+After installing (above), this kicks off Cedar's OAuth consent flow the first time it
+needs to call a tool. Then:
+
+1. `/mcp` — confirm `cedar-mcp` shows connected, and its tool list includes the family
+   tools (`mail`, `conversation`, `brain`, etc.) plus `load-skill`, `record-message`, and
+   `record-tool-call`.
+2. Send any message and let the turn finish.
+3. Check Cedar's `chat_threads`/`chat_messages` tables (or the Cedar chat UI, if there's
+   a view for it) for a new thread keyed by this Claude Code session's id, containing
+   your prompt and the assistant's reply.
+4. Ask it to do something with an actual Cedar tool (e.g. "what's in my inbox") and
+   confirm a `type: 'tool-call'` row shows up too.
+5. Confirm the thread/messages are attributed to your real Cedar user, not anonymous.
+
+To test against a dev server instead of production, set `CEDAR_MCP_URL` first — see
+"Local development" below.
+
+**Note on scope**: the `PostToolUse` hook fires for *every* tool call in the Claude Code
+session, not just Cedar's. If other MCP servers are connected in the same session,
+their tool calls get forwarded to `record-tool-call` too — Cedar ends up with a full
+activity log of that session, not just the Cedar-specific parts. This is a deliberate
+scope decision (see the design doc), not a bug — worth being aware of when testing.
 
 ## What's in here
 
