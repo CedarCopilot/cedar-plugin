@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "description": "Cedar — AI email & CRM copilot. Connects Cedar's tools and skills, and records your conversation to Cedar on hook-capable surfaces (Cowork, Claude Code).",
+  "description": "Cedar is a sales execution platform for AEs and sales teams — it connects to your email, meetings, Slack, and CRM to automatically organize every deal interaction into structured context, then proactively drafts follow-ups and pushes playbook recommendations to reps via Slack, iMessage, or email. The result: stalled deals go to zero, response times drop, and reps spend their time selling instead of chasing admin. Over time, Cedar surfaces what your top reps do differently — so the whole team can close at a higher rate. This plugin connects Cedar's tools and skills, and includes conversation capture on hook-capable surfaces (Cowork, Claude Code).",
   "version": "0.1.0",
   "author": {
     "name": "Cedar"
