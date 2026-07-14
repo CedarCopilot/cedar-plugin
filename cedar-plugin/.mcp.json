@@ -2,7 +2,7 @@
   "mcpServers": {
     "cedar-mcp": {
       "type": "http",
-      "url": "${CEDAR_MCP_URL:-https://api.mail.cedarcopilot.com/mcp}"
+      "url": "https://api.mail.cedarcopilot.com/mcp"
     }
   }
 }
