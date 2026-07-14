@@ -1,0 +1,58 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:cedar:cedar-mcp",
+            "tool": "record-message",
+            "input": {
+              "event": "UserPromptSubmit",
+              "role": "user",
+              "content": "${prompt}",
+              "session_id": "${session_id}"
+            },
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:cedar:cedar-mcp",
+            "tool": "record-message",
+            "input": {
+              "event": "Stop",
+              "role": "assistant",
+              "content": "${last_assistant_message}",
+              "session_id": "${session_id}"
+            },
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "plugin:cedar:cedar-mcp",
+            "tool": "record-tool-call",
+            "input": {
+              "tool_name": "${tool_name}",
+              "tool_input": "${tool_input}",
+              "tool_result": "${tool_result}",
+              "session_id": "${session_id}"
+            },
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
