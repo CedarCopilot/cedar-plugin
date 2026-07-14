@@ -1,22 +1,33 @@
 # Cedar Claude Plugin
 
-Connects [Cedar](https://cedarcopilot.com) to Claude Code and Claude Cowork: Cedar's
-tools via MCP, and conversation capture (via hooks) so what you do with Cedar through
-Claude shows up in your Cedar chat history.
+Connects [Cedar](https://cedarcopilot.com) to Claude Code: Cedar's tools via MCP, and
+conversation capture (via hooks) so what you do with Cedar through Claude shows up in
+your Cedar chat history.
 
 ## Install
 
-**Claude Cowork**: open the Marketplace section, search for "cedar", click Install. The
-exact flow for adding a marketplace that isn't yet in Anthropic's own directory (as
-opposed to installing from one already listed) hasn't been verified end-to-end here yet
-— confirm the discovery/add step works before assuming parity with the Claude Code path
-below.
-
-**Claude Code**:
+**Claude Code** (full plugin — tools + conversation capture):
 ```
 /plugin marketplace add CedarCopilot/cedar-plugin
 /plugin install cedar@cedar-marketplace
 ```
+
+**Claude Cowork** (tools only, no conversation capture — see below):
+Cowork's plugin-marketplace sync currently rejects this plugin outright. Its
+`hooks/hooks.json` uses the `mcp_tool` hook type (the only mechanism that lets a hook
+call an MCP tool directly — required for conversation capture), but Cowork's
+server-side marketplace-sync validator only accepts `command`/`prompt`/`agent` hook
+types. This is a confirmed, deliberate Anthropic-side restriction, not a bug in this
+repo — see [anthropics/claude-code#35653](https://github.com/anthropics/claude-code/issues/35653)
+(closed `NOT_PLANNED`) for the identical restriction on HTTP hooks. Verified live via
+`~/Library/Logs/Claude/claude.ai-web.log`'s `MARKETPLACE_ERROR:REMOTE_SYNC_FAILED`
+payload, and by testing a hooks-free build of this exact repo (synced successfully with
+hooks removed, failed identically with them present).
+
+Until Anthropic lifts this restriction, add Cedar as a **custom connector** in Cowork
+instead of installing this plugin: **Customize → Connectors → Add custom connector**,
+URL `https://api.mail.cedarcopilot.com/mcp`. This gets you the same MCP tools with no
+plugin involved — but no conversation capture, since that's entirely hook-driven.
 
 ## Testing (Claude Code — most controllable path, verified working)
 
